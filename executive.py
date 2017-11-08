@@ -1,3 +1,5 @@
+from lers_reader import Lers_Reader
+
 class Executive(object):
 
     def run(self):
@@ -5,9 +7,9 @@ class Executive(object):
         # Get and open file from the user
         file_open = False
         while not file_open:
-            file_name = raw_input("Please enter a filename: ")
+            filename = raw_input("Please enter a filename: ")
             try:
-                file_test = open(file_name, 'r')
+                file_test = open(filename, 'r')
                 file_open = True
             except IOError:
                 print "File could not be opened"
@@ -29,5 +31,6 @@ class Executive(object):
                 print "Invalid Maxstar value. Please enter an integer larger than 0."
         # End maxstar retrieval
 
-        print file_name
-        print maxstar
+        reader = Lers_Reader(filename)
+        dataset = reader.read()
+        dataset.display()
