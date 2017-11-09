@@ -79,6 +79,14 @@ class Dataset(object):
                 sys.stdout.write(case.attribute_values[attribute] + '\t')
             sys.stdout.write(case.decision + '\n')
 
+    def is_consistent(self):
+        for case in self.universe:
+            for other in self.universe:
+                if case.attribute_values == other.attribute_values:
+                    if case.decision != other.decision:
+                        return False
+        return True
+
 
 class Case(object):
     def __init__(self):

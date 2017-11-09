@@ -33,4 +33,14 @@ class Executive(object):
 
         reader = Lers_Reader(filename)
         dataset = reader.read()
-        dataset.display()
+        #dataset.display()
+        if not dataset.is_consistent():
+            with open(filename, 'r+') as f:
+                content = f.read()
+                f.seek(0, 0)
+                f.write("! Dataset is inconsistent".rstrip('\r\n') + '\n' + content)
+            print "Dataset is inconsistent"
+            print "No rules induced"
+            return
+        else:
+            print "Come on then"
