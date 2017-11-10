@@ -15,3 +15,16 @@ def disjunction(star1, star2, maxstar):
             if len(new_star) >= maxstar:
                 return new_star
     return new_star
+
+def cases_covered_by_complex(dataset, complex1):
+    cases = []
+    for i, case in enumerate(dataset.universe):
+        if case_covered_by_complex(case, complex1):
+            cases.append(i)
+    return cases
+
+def case_covered_by_complex(case, complex1):
+    for selector in complex1:
+        if case.attribute_values[selector[0]] == selector[1]:
+            return False
+    return True

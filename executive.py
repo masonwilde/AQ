@@ -43,4 +43,4 @@ class Executive(object):
             print "No rules induced"
             return
         else:
-            print "Come on then"
+            print dataset

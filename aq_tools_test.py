@@ -1,5 +1,9 @@
 import unittest
 import aq_tools
+from lers_reader import Lers_Reader
+
+reader = Lers_Reader("simple_consistent.d")
+mock_dataset = reader.read()
 
 
 class TestAQTools(unittest.TestCase):
@@ -35,6 +39,10 @@ class TestAQTools(unittest.TestCase):
         new_star = aq_tools.disjunction(star1, star2, 3)
         self.assertEqual(new_star, [[["Temp", "low"], ["Headache", "yes"]], [["Temp", "low"], ["Cough", "no"]],
                                     [["Cough", "no"], ["Headache", "yes"]]])
+
+    def test_cases_covered_by_complex_simple(self):
+        result = aq_tools.cases_covered_by_complex(mock_dataset, [["Temperature", "high"]])
+        self.assertEqual(result, [1,2,5,6])
 
 if __name__ == '__main__':
     unittest.main()
