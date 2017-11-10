@@ -34,3 +34,10 @@ def cases_covered_by_star(dataset, star):
     for complex1 in star:
         cases = list(set(cases) | set(cases_covered_by_complex(dataset, complex1)))
     return cases
+
+def make_star(attributes, case1, case2):
+    star = []
+    for attribute in attributes:
+        if case1.attribute_values[attribute] != case2.attribute_values[attribute]:
+            star.append([[attribute, case2.attribute_values[attribute]]])
+    return star

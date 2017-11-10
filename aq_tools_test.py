@@ -56,5 +56,11 @@ class TestAQTools(unittest.TestCase):
         result = aq_tools.cases_covered_by_star(mock_dataset, [[["Temperature", "high"]], [["Nausea", "no"]]])
         self.assertEqual(result, [1,2,3,4,5,6])
 
+    def test_make_star_simple(self):
+        case1 = mock_dataset.universe[0]
+        case2 = mock_dataset.universe[3]
+        result = aq_tools.make_star(mock_dataset.attributes, case1, case2)
+        self.assertEqual(result, [[["Nausea", "yes"]]])
+
 if __name__ == '__main__':
     unittest.main()
