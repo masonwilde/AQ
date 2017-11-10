@@ -44,5 +44,13 @@ class TestAQTools(unittest.TestCase):
         result = aq_tools.cases_covered_by_complex(mock_dataset, [["Temperature", "high"]])
         self.assertEqual(result, [1,2,5,6])
 
+    def test_cases_covered_by_complex_advanced(self):
+        result = aq_tools.cases_covered_by_complex(mock_dataset, [["Temperature", "high"], ["Headache", "yes"]])
+        self.assertEqual(result, [2,6])
+
+    def test_cases_covered_by_complex_super_advanced(self):
+        result = aq_tools.cases_covered_by_complex(mock_dataset, [["Temperature", "high"], ["Headache", "yes"], ["Nausea", "no"]])
+        self.assertEqual(result, [6])
+
 if __name__ == '__main__':
     unittest.main()
