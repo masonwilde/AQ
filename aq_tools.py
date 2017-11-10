@@ -28,3 +28,9 @@ def case_covered_by_complex(case, complex1):
         if case.attribute_values[selector[0]] == selector[1]:
             return False
     return True
+
+def cases_covered_by_star(dataset, star):
+    cases = []
+    for complex1 in star:
+        cases = list(set(cases) | set(cases_covered_by_complex(dataset, complex1)))
+    return cases
