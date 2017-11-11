@@ -69,3 +69,19 @@ class Rule(object):
             rule += "(" + condition.attribute + ", not " + condition.value + ") "
         rule += "-> (" + self.decision.label + ", " + self.decision.value + ")"
         return rule
+
+class Ruleset(object):
+    def __init__(self):
+        self._rules = []
+
+    @property
+    def rules(self):
+        return self._rules
+
+    @rules.setter
+    def rules(self, value):
+        self._rules = value
+
+    def display(self):
+        for rule in self.rules:
+            print rule.to_string()
