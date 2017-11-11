@@ -1,4 +1,5 @@
 from lers_reader import Lers_Reader
+from aq import AQ
 
 class Executive(object):
 
@@ -43,4 +44,5 @@ class Executive(object):
             print "No rules induced"
             return
         else:
-            print dataset
+            my_aq = AQ(maxstar, dataset)
+            my_aq.induce()

@@ -17,6 +17,12 @@ class TestAQTools(unittest.TestCase):
         complex2 = [["Temp", "low"]]
         new_complex = aq_tools.combine_complex(complex1, complex2)
         self.assertEqual(new_complex, [["Temp", "low"], ["Cough", "no"]])
+    def test_disjunction_empty_star(self):
+        star1 = [[]]
+        star2 = [[["Headache", "yes"]]]
+        new_star = aq_tools.disjunction(star1, star2, 10)
+        self.assertEqual(new_star, [[["Headache", "yes"]]])
+
     def test_disjunction_single_complex_single_selector(self):
         star1 = [[["Temp", "low"]]]
         star2 = [[["Headache", "yes"]]]
