@@ -85,3 +85,9 @@ class Ruleset(object):
     def display(self):
         for rule in self.rules:
             print rule.to_string()
+
+    def print_to_file(self):
+        f = open("my-data.with.negation.rul", 'w')
+        for rule in self.rules:
+            f.write(rule.to_string() + '\n')
+        f.closed
