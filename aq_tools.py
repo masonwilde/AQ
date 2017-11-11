@@ -41,3 +41,18 @@ def make_star(attributes, case1, case2):
         if case1.attribute_values[attribute] != case2.attribute_values[attribute]:
             star.append([[attribute, case2.attribute_values[attribute]]])
     return star
+
+def get_cases_in_concept(dataset, decision_value):
+    cases =[]
+    for i, case in enumerate(dataset.universe):
+        if case.decision == decision_value:
+            cases.append(i)
+    return cases
+
+def get_concepts(dataset):
+    concepts = []
+    for cur_decision in dataset.decision_range:
+        cases = get_cases_in_concept(dataset, cur_decision)
+        new_concept = [[dataset.decision, cur_decision], cases]
+        concepts.append(new_concept)
+    return concepts

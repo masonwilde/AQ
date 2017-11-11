@@ -62,5 +62,13 @@ class TestAQTools(unittest.TestCase):
         result = aq_tools.make_star(mock_dataset.attributes, case1, case2)
         self.assertEqual(result, [[["Nausea", "yes"]]])
 
+    def test_get_cases_in_concept_simple(self):
+        result = aq_tools.get_cases_in_concept(mock_dataset, "yes")
+        self.assertEqual(result, [0,1,3])
+
+    def test_get_concepts_simple(self):
+        result = aq_tools.get_concepts(mock_dataset)
+        self.assertEqual(result, [[["Flue", "yes"], [0,1,3]], [["Flue", "no"], [2,4,5,6]]])
+
 if __name__ == '__main__':
     unittest.main()
