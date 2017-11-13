@@ -16,6 +16,7 @@ def make_star_for_concept(dataset, concept, maxstar):
         for bad_case in F:
             partial_star = aq_tools.make_star(dataset.attributes, dataset.universe[cases_to_cover[0]], dataset.universe[bad_case])
             star = aq_tools.disjunction(star, partial_star, maxstar)
+        star = [max(star, key=lambda c: len(aq_tools.cases_covered_by_complex(dataset, c)))]
         stars.append(star)
         covered_cases = []
         for star in stars:
