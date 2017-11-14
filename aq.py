@@ -3,6 +3,16 @@ from dataset import Dataset
 import aq_tools
 import rule_tools
 
+
+def complex_is_superset(complex1, complex2):
+    for selector in complex2:
+        if selector not in complex1:
+            return False
+    for selector in complex1:
+        if selector not in complex2:
+            return True
+    return False
+
 def make_star_for_concept(dataset, concept, maxstar):
     #print concept
     stars = []
@@ -16,6 +26,18 @@ def make_star_for_concept(dataset, concept, maxstar):
         for bad_case in F:
             partial_star = aq_tools.make_star(dataset.attributes, dataset.universe[cases_to_cover[0]], dataset.universe[bad_case])
             star = aq_tools.disjunction(star, partial_star, maxstar)
+        if len(star) > 1:
+            trimmed_star = []
+            for i in range(len(star)):
+                i_is_superset = False
+                for j in range(len(star)):
+                    if i != j:
+                        if complex_is_superset(star[i], star[j]):
+                            i_is_superset = True
+                if not i_is_superset:
+                    trimmed_star.append(star[i])
+                    print "adding ", star[i]
+            star = trimmed_star
         star = [max(star, key=lambda c: len(aq_tools.cases_covered_by_complex(dataset, c)))]
         stars.append(star)
         covered_cases = []
