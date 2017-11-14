@@ -36,10 +36,10 @@ class Executive(object):
         dataset = reader.read()
         #dataset.display()
         if not dataset.is_consistent():
-            with open(filename, 'r+') as f:
-                content = f.read()
-                f.seek(0, 0)
-                f.write("! Dataset is inconsistent".rstrip('\r\n') + '\n' + content)
+            with open("my-data.with.negation.rul", 'w') as f:
+                f.write("! The input data set is inconsistent\n")
+            with open("my-data.without.negation.rul", 'w') as f:
+                f.write("! The input data set is inconsistent\n")
             print "Dataset is inconsistent"
             print "No rules induced"
             return
