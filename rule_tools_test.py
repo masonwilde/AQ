@@ -29,12 +29,19 @@ class TestRuleTools(unittest.TestCase):
                                 decision=Decision(label="Flue", value="yes")),
                             Rule(conditions=[Condition(attribute="Temp", value="normal")],
                                 decision=Decision(label="Flue", value="yes"))]
-        print "Result"
-        for rule in result:
-            print rule.to_string()
-        print "Expected"
-        for rule in expected_ruleset:
-            print rule.to_string()
+        for i in range(len(expected_ruleset)):
+            for j in range(len(expected_ruleset[i].conditions)):
+                self.assertEqual(expected_ruleset[i].conditions[j], result[i].conditions[j])
+
+    def test_unnegate_rule(self):
+        rule = Rule(conditions=[Condition(attribute="Temperature", value="very_high"),
+                                Condition(attribute="Headache", value="no")],
+                    decision=Decision(label="Flue", value="no"))
+        result = rule_tools.unnegate_rule(mock_dataset, rule)
+        expected_ruleset = [Rule(conditions=[Condition(attribute="Temperature", value="high"), Condition(attribute="Headache", value="yes")],
+                                decision=Decision(label="Flue", value="yes")),
+                            Rule(conditions=[Condition(attribute="Temperature", value="normal"), Condition(attribute="Headache", value="yes")],
+                                decision=Decision(label="Flue", value="yes"))]
         for i in range(len(expected_ruleset)):
             for j in range(len(expected_ruleset[i].conditions)):
                 self.assertEqual(expected_ruleset[i].conditions[j], result[i].conditions[j])

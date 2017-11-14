@@ -33,5 +33,5 @@ def unnegate_rule(dataset, rule):
     available_attribute_values = get_available_attribute_values(dataset, rule)
     new_ruleset = [Rule(decision=rule.decision)]
     for attribute in available_attribute_values:
-        new_ruleset = expand_ruleset(ruleset, attribute, available_attribute_values[attribute])
+        new_ruleset = expand_ruleset(new_ruleset, attribute, available_attribute_values[attribute])
     return new_ruleset
