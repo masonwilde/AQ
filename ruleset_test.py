@@ -29,7 +29,7 @@ class TestRuleset(unittest.TestCase):
         rule = Rule(conditions=[Condition(attribute="Temperature", value="very_high"),
                                 Condition(attribute="Headache", value="no")],
                     decision=Decision(label="Flue", value="no"))
-        result = unnegate_rule(mock_dataset, rule)
+        result = ruleset.unnegate_rule(mock_dataset, rule)
         expected_ruleset = [Rule(conditions=[Condition(attribute="Temperature", value="high"), Condition(attribute="Headache", value="yes")],
                                 decision=Decision(label="Flue", value="yes")),
                             Rule(conditions=[Condition(attribute="Temperature", value="normal"), Condition(attribute="Headache", value="yes")],
