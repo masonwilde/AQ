@@ -3,6 +3,9 @@ class Condition(object):
         self._attribute = attribute
         self._value = value
 
+    def __eq__(self, other):
+        return self.attribute == other.attribute and self.value == other.value
+
     @property
     def attribute(self):
         return self._attribute
