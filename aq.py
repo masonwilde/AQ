@@ -65,4 +65,4 @@ class AQ(object):
                 for complex1 in star:
                     self._ruleset.rules.append(rule_tools.rule_from_complex(complex1, decision))
         self._ruleset.display()
-        self._ruleset.print_to_file()
+        self._ruleset.print_to_file(filename="my-data.with.negation.rul")
