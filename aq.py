@@ -36,7 +36,7 @@ def make_star_for_concept(dataset, concept, maxstar):
                             i_is_superset = True
                 if not i_is_superset:
                     trimmed_star.append(star[i])
-                    print "adding ", star[i]
+                    #print "adding ", star[i]
             star = trimmed_star
         star = [max(star, key=lambda c: len(aq_tools.cases_covered_by_complex(dataset, c)))]
         stars.append(star)
