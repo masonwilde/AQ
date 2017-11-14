@@ -64,12 +64,12 @@ class Rule(object):
     def decision(self, value):
         self._decision = value
 
-    def to_string(self):
+    def to_string(self, negated=True):
         rule = ""
         for i, condition in enumerate(self.conditions):
             if i > 0:
                 rule += "& "
-            rule += "(" + condition.attribute + ", not " + condition.value + ") "
+            rule += "(" + condition.attribute + (", not " if negated else ", ") + condition.value + ") "
         rule += "-> (" + self.decision.label + ", " + self.decision.value + ")"
         return rule
 
