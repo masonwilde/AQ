@@ -52,6 +52,7 @@ class AQ(object):
     def __init__(self, maxstar, dataset = Dataset()):
         self._dataset = dataset
         self._ruleset = Ruleset()
+        self._unnegated_ruleset = Ruleset()
         self._maxstar = maxstar
 
     def induce(self):
@@ -64,5 +65,10 @@ class AQ(object):
             for star in stars:
                 for complex1 in star:
                     self._ruleset.rules.append(rule_tools.rule_from_complex(complex1, decision))
+        self._unnegated_ruleset.rules = self._ruleset.unnegate(self._dataset)
+        print "Rules with Negation"
         self._ruleset.display()
         self._ruleset.print_to_file(filename="my-data.with.negation.rul")
+        print "Rules without Negation"
+        self._unnegated_ruleset.display(negated=False)
+        self._unnegated_ruleset.print_to_file(filename="my-data.without.negation.rul", negated=False)

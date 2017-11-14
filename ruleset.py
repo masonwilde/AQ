@@ -1,3 +1,32 @@
+def get_available_attribute_values(dataset, rule):
+    attribute_values = {}
+    for condition in rule.conditions:
+        if condition.attribute not in attribute_values:
+            attribute_values[condition.attribute] = dataset.attribute_value_ranges[condition.attribute]
+        attribute_values[condition.attribute] = list(set(attribute_values[condition.attribute]) - set([condition.value]))
+    return attribute_values
+
+def expand_ruleset(ruleset, attr, values):
+    new_ruleset = []
+    for rule in ruleset:
+        # print "Starting with Rule:", rule.to_string()
+        starting_conditions = rule.conditions
+        for val in values:
+            # print "\tAdd rule with", attr, val
+            new_rule = Rule(decision=rule.decision)
+            # print "\trule to build on is", new_rule.to_string()
+            new_rule.conditions = starting_conditions + [Condition(attribute=attr, value=val)]
+            # print "\tappending", new_rule.to_string()
+            new_ruleset.append(new_rule)
+    return new_ruleset
+
+def unnegate_rule(dataset, rule):
+    available_attribute_values = get_available_attribute_values(dataset, rule)
+    new_ruleset = [Rule(decision=rule.decision)]
+    for attribute in available_attribute_values:
+        new_ruleset = expand_ruleset(new_ruleset, attribute, available_attribute_values[attribute])
+    return new_ruleset
+
 class Condition(object):
     def __init__(self, attribute = None, value = None):
         self._attribute = attribute
@@ -74,8 +103,8 @@ class Rule(object):
         return rule
 
 class Ruleset(object):
-    def __init__(self):
-        self._rules = []
+    def __init__(self, rules=[]):
+        self._rules = rules
 
     @property
     def rules(self):
@@ -85,12 +114,18 @@ class Ruleset(object):
     def rules(self, value):
         self._rules = value
 
-    def display(self):
+    def display(self, negated=True):
         for rule in self.rules:
-            print rule.to_string()
+            print rule.to_string(negated)
 
     def print_to_file(self, filename, negated=True):
         f = open(filename, 'w')
         for rule in self.rules:
-            f.write(rule.to_string() + '\n')
+            f.write(rule.to_string(negated) + '\n')
         f.closed
+
+    def unnegate(self, dataset):
+        new_ruleset = []
+        for rule in self.rules:
+            new_ruleset = new_ruleset + unnegate_rule(dataset, rule)
+        return new_ruleset
