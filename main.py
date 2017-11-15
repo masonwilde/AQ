@@ -1,12 +1,10 @@
 #!/usr/bin/env python
 
 import sys
-
-from executive import Executive
+import executive
 
 def main():
-    _exec = Executive()
-    _exec.run()
+    executive.run()
 
 
 if __name__ == "__main__":
