@@ -26,6 +26,9 @@ def get_cutpoints(vals):
         cutpoints.append(cutpoint)
     return cutpoints
 
+def new_attr_name(attribute, cutpoint):
+    return "" + attribute + "_" + str(cutpoint)
+
 class Dataset(object):
 
     def __init__(self):
@@ -112,6 +115,21 @@ class Dataset(object):
                     if case.decision != other.decision:
                         return False
         return True
+
+    def discretize(self):
+        new_attributes = []
+        for attribute in self.attributes:
+            if attribute_is_discretizable(attribute, self):
+                attribute_values = get_sorted_numerical_attribute_values(attribute, self)
+                cutpoints = get_cutpoints(attribute_values)
+                min_val = min(attribute_values)
+                max_val = max(attribute_values)
+                for cutpoint in cutpoints:
+                    new_attr_name = new_attr_name(attribute, cutpoint)
+                    new_attributes.append(new_attr_name)
+            else:
+                new_attributes.append(attribute)
+        self._attributes = new_attributes
 
 class Case(object):
     def __init__(self):
