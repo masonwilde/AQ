@@ -29,6 +29,8 @@ def run():
         except ValueError:
             print "Invalid Maxstar value. Please enter an integer larger than 0."
     # End maxstar retrieval
+    file_title = filename.partition('.')[0]
+
 
     reader = Lers_Reader(filename)
     print "File opened"
@@ -48,4 +50,4 @@ def run():
         print "No rules induced"
         return
     else:
-        aq_tools.induce(dataset, maxstar)
+        aq_tools.induce(dataset, maxstar, file_title)

@@ -104,7 +104,7 @@ def make_star_for_concept(dataset, concept, maxstar):
     #print stars
     return stars
 
-def induce(dataset, maxstar):
+def induce(dataset, maxstar, file_title):
     concept_stars = []
     ruleset = Ruleset()
     unnegated_ruleset = Ruleset()
@@ -120,7 +120,7 @@ def induce(dataset, maxstar):
     unnegated_ruleset.rules = ruleset.unnegate(dataset)
     # print "Rules with Negation"
     # self._ruleset.display()
-    ruleset.print_to_file(filename="my-data.with.negation.rul")
+    ruleset.print_to_file(filename=file_title+".with.negation.rul")
     # print "Rules without Negation"
     # self._unnegated_ruleset.display(negated=False)
-    unnegated_ruleset.print_to_file(filename="my-data.without.negation.rul", negated=False)
+    unnegated_ruleset.print_to_file(filename=file_title+".without.negation.rul", negated=False)
