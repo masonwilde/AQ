@@ -24,6 +24,7 @@ def make_star_for_concept(dataset, concept, maxstar):
         #print "Cases to cover", cases_to_cover
         star = [[]]
         for bad_case in F:
+            #print "Making star for ", cases_to_cover[0], bad_case
             partial_star = aq_tools.make_star(dataset.attributes, dataset.universe[cases_to_cover[0]], dataset.universe[bad_case])
             star = aq_tools.disjunction(star, partial_star, maxstar)
         if len(star) > 1:
@@ -58,6 +59,7 @@ class AQ(object):
     def induce(self):
         concept_stars = []
         for concept in aq_tools.get_concepts(self._dataset):
+            #print "Working on concept ", concept
             concept_stars.append([concept[0], make_star_for_concept(self._dataset, concept, self._maxstar)])
         for concept in concept_stars:
             decision = concept[0]
@@ -66,9 +68,9 @@ class AQ(object):
                 for complex1 in star:
                     self._ruleset.rules.append(rule_tools.rule_from_complex(complex1, decision))
         self._unnegated_ruleset.rules = self._ruleset.unnegate(self._dataset)
-        print "Rules with Negation"
-        self._ruleset.display()
+        # print "Rules with Negation"
+        # self._ruleset.display()
         self._ruleset.print_to_file(filename="my-data.with.negation.rul")
-        print "Rules without Negation"
-        self._unnegated_ruleset.display(negated=False)
+        # print "Rules without Negation"
+        # self._unnegated_ruleset.display(negated=False)
         self._unnegated_ruleset.print_to_file(filename="my-data.without.negation.rul", negated=False)
