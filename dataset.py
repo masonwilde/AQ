@@ -1,5 +1,12 @@
 import sys
 
+def attribute_is_discretizable(attribute, dataset):
+    try:
+        x = float(dataset.universe[0].attribute_values[attribute])
+        return True
+    except:
+        return False
+
 class Dataset(object):
 
     def __init__(self):
@@ -86,7 +93,6 @@ class Dataset(object):
                     if case.decision != other.decision:
                         return False
         return True
-
 
 class Case(object):
     def __init__(self):

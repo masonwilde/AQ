@@ -35,6 +35,7 @@ class Executive(object):
         reader = Lers_Reader(filename)
         dataset = reader.read()
         #dataset.display()
+        #dataset.discretize()
         if not dataset.is_consistent():
             with open("my-data.with.negation.rul", 'w') as f:
                 f.write("! The input data set is inconsistent\n")
