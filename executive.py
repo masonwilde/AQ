@@ -33,9 +33,13 @@ class Executive(object):
         # End maxstar retrieval
 
         reader = Lers_Reader(filename)
+        print "File opened"
         dataset = reader.read()
+        print "Dataset read"
+        print "Beginning Discretization Process"
         dataset.discretize()
-        dataset.display()
+        print "Discretization Complete"
+        #dataset.display()
         #dataset.discretize()
         if not dataset.is_consistent():
             with open("my-data.with.negation.rul", 'w') as f:
