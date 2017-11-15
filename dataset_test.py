@@ -18,10 +18,10 @@ class TestDataset(unittest.TestCase):
         result = dataset.get_cutpoints([70,80,90])
         self.assertEqual(result, [75,85])
     def test_new_attr_name(self):
-        result = dataset.new_attr_name("Wind", 5)
+        result = dataset.new_attribute_name("Wind", 5)
         self.assertEqual(result, "Wind_5")
     def test_new_attr_name_float(self):
-        result = dataset.new_attr_name("Wind", 5.5)
+        result = dataset.new_attribute_name("Wind", 5.5)
         self.assertEqual(result, "Wind_5.5")
 
 if __name__ == '__main__':
