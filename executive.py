@@ -29,8 +29,8 @@ def run():
         except ValueError:
             print "Invalid Maxstar value. Please enter an integer larger than 0."
     # End maxstar retrieval
-    file_title = filename.partition('.')[0]
-
+    #get path without extension
+    file_title = ('.').join(filename.rsplit('.')[:-1])
 
     reader = Lers_Reader(filename)
     print "File opened"
