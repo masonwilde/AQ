@@ -7,6 +7,18 @@ def attribute_is_discretizable(attribute, dataset):
     except:
         return False
 
+def get_sorted_numerical_attribute_values(attribute, dataset):
+    vals = []
+    for case in dataset.universe:
+        numerical_val = 0
+        try:
+            numerical_val = int(case.attribute_values[attribute])
+        except:
+            numerical_val = float(case.attribute_values[attribute])
+        if numerical_val not in vals:
+            vals.append(numerical_val)
+    return sorted(vals)
+
 class Dataset(object):
 
     def __init__(self):

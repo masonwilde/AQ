@@ -11,6 +11,9 @@ class TestDataset(unittest.TestCase):
         self.assertTrue(dataset.attribute_is_discretizable('Temperature', mock_dataset))
     def test_attribute_is_discretizable_false(self):
         self.assertFalse(dataset.attribute_is_discretizable('Headache', mock_dataset))
+    def test_get_sorted_numerical_attribute_values(self):
+        result = dataset.get_sorted_numerical_attribute_values("Temperature", mock_dataset)
+        self.assertEqual(result, [70,80,90])
 
 if __name__ == '__main__':
     unittest.main()
