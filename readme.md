@@ -1,4 +1,4 @@
-EECS 690 AQ Algorithm Project
+EECS 690 AQ Project
 
 **To run:**
 
