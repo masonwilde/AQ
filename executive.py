@@ -33,12 +33,12 @@ def run():
     file_title = ('.').join(filename.rsplit('.')[:-1])
 
     reader = Lers_Reader(filename)
-    print "File opened"
+    # print "File opened"
     dataset = reader.read()
-    print "Dataset read"
-    print "Beginning Discretization Process"
+    # print "Dataset read"
+    # print "Beginning Discretization Process"
     dataset.discretize()
-    print "Discretization Complete"
+    # print "Discretization Complete"
     #dataset.display()
     #dataset.discretize()
     if not dataset.is_consistent():
