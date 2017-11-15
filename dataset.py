@@ -19,6 +19,13 @@ def get_sorted_numerical_attribute_values(attribute, dataset):
             vals.append(numerical_val)
     return sorted(vals)
 
+def get_cutpoints(vals):
+    cutpoints = []
+    for i in range(len(vals)-1):
+        cutpoint = (vals[i]+vals[i+1])/2
+        cutpoints.append(cutpoint)
+    return cutpoints
+
 class Dataset(object):
 
     def __init__(self):
