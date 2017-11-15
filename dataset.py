@@ -26,8 +26,17 @@ def get_cutpoints(vals):
         cutpoints.append(cutpoint)
     return cutpoints
 
-def new_attr_name(attribute, cutpoint):
+def new_attribute_name(attribute, cutpoint):
     return "" + attribute + "_" + str(cutpoint)
+
+def populate_discretized_attribute(dataset, init_attr, new_attr_name, cutpoint, min_val, max_val):
+    for case in dataset.universe:
+        case_val = float(case.attribute_values[init_attr])
+        if case_val < cutpoint:
+            new_val = str(min_val) + ".." + str(cutpoint)
+        else:
+            new_val = str(cutpoint) + ".." + str(max_val)
+        case.attribute_values[new_attr_name] = new_val
 
 class Dataset(object):
 
@@ -125,8 +134,12 @@ class Dataset(object):
                 min_val = min(attribute_values)
                 max_val = max(attribute_values)
                 for cutpoint in cutpoints:
-                    new_attr_name = new_attr_name(attribute, cutpoint)
+                    new_attr_name = new_attribute_name(attribute, cutpoint)
                     new_attributes.append(new_attr_name)
+                    option1 = str(min_val) + ".." + str(cutpoint)
+                    option2 = str(cutpoint) + ".." + str(max_val)
+                    self.attribute_value_ranges[new_attr_name] = [option1, option2]
+                    populate_discretized_attribute(self, attribute, new_attr_name, cutpoint, min_val, max_val)
             else:
                 new_attributes.append(attribute)
         self._attributes = new_attributes
