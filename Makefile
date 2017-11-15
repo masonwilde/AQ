@@ -1,5 +1,5 @@
 run:
-	python main.py
+	python AQ.py
 
 test:
 	python aq_tools_test.py
