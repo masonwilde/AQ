@@ -83,20 +83,20 @@ def make_star_for_concept(dataset, concept, maxstar):
             #print "Making star for ", cases_to_cover[0], bad_case
             partial_star = make_star(dataset.attributes, dataset.universe[cases_to_cover[0]], dataset.universe[bad_case])
             star = disjunction(star, partial_star, maxstar)
-        if len(star) > 1:
-            trimmed_star = []
-            for i in range(len(star)):
-                i_is_superset = False
-                for j in range(len(star)):
-                    if i != j:
-                        if complex_is_superset(star[i], star[j]):
-                            i_is_superset = True
-                if not i_is_superset:
-                    trimmed_star.append(star[i])
-                    #print "adding ", star[i]
-            star = trimmed_star
-        star = [max(star, key=lambda c: len(cases_covered_by_complex(dataset, c)))]
-        stars.append(star)
+        # if len(star) > 1:
+        #     trimmed_star = []
+        #     for i in range(len(star)):
+        #         i_is_superset = False
+        #         for j in range(len(star)):
+        #             if i != j:
+        #                 if complex_is_superset(star[i], star[j]):
+        #                     i_is_superset = True
+        #         if not i_is_superset:
+        #             trimmed_star.append(star[i])
+        #             #print "adding ", star[i]
+        #     star = trimmed_star
+        # star = [max(star, key=lambda c: len(cases_covered_by_complex(dataset, c)))]
+        stars.append([star[0]])
         covered_cases = []
         for star in stars:
             covered_cases = list(set(covered_cases).union(set(cases_covered_by_star(dataset, star))))
