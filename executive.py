@@ -51,3 +51,4 @@ def run():
         return
     else:
         aq_tools.induce(dataset, maxstar, file_title)
+        print "Done."
