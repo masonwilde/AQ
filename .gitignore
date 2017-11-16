@@ -1,5 +1,4 @@
 *.rul
 *.pyc
 *.d
-*.txt
 .DS_Store
