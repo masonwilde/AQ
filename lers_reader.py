@@ -1,4 +1,5 @@
 import sys
+import re
 from dataset import Dataset, Case
 
 class Lers_Reader(object):
@@ -35,4 +36,61 @@ class Lers_Reader(object):
                     if value not in dataset.attribute_value_ranges[dataset.attributes[i]]:
                         dataset.attribute_value_ranges[dataset.attributes[i]].append(value)
                 dataset.universe.append(case)
+        return dataset
+
+    def read_improved(self):
+        self._file = open(self._filename, 'r')
+        inpt = re.findall('\S+|\n', self._file.read())
+        #rint inpt
+        dataset = Dataset()
+        new_case = Case()
+        case_attr_index = 0
+        read_mode = "normal"
+        prev_mode = "normal"
+        for word in inpt:
+            # print "read", word
+            if word[0] == "!":
+                prev_mode = read_mode
+                read_mode = "comment"
+            elif read_mode == "comment":
+                if word == "\n":
+                    read_mode = prev_mode
+            elif read_mode == "ignore":
+                if word == ">":
+                    # print "Ending ignore"
+                    read_mode = prev_mode
+            elif word != "\n":
+                if read_mode == "normal":
+                    if word == "<":
+                        # print "start ignore"
+                        prev_mode = read_mode
+                        read_mode = "ignore"
+                    if word == "[":
+                        # print "start labels"
+                        prev_mode = read_mode
+                        read_mode = "labels"
+                elif read_mode == "labels":
+                    if word == "]":
+                        # print "make dataset decision be", dataset.attributes[-1]
+                        dataset.decision = dataset.attributes[-1]
+                        del dataset.attributes[-1]
+                        read_mode = "cases"
+                    else:
+                        # print "adding dataset attribute", word
+                        dataset.attributes.append(word)
+                        if word not in dataset.attribute_value_ranges:
+                            dataset.attribute_value_ranges[word] = []
+                elif read_mode == "cases":
+                    if case_attr_index == len(dataset.attributes):
+                        new_case.decision = word
+                        if word not in dataset.decision_range:
+                            dataset.decision_range.append(word)
+                        dataset.universe.append(new_case)
+                        new_case = Case()
+                        case_attr_index = 0
+                    else:
+                        new_case.attribute_values[dataset.attributes[case_attr_index]] = word
+                        if word not in dataset.attribute_value_ranges[dataset.attributes[case_attr_index]]:
+                            dataset.attribute_value_ranges[dataset.attributes[case_attr_index]].append(word)
+                        case_attr_index += 1
         return dataset

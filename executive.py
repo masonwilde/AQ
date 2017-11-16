@@ -31,10 +31,13 @@ def run():
     # End maxstar retrieval
     #get path without extension
     file_title = ('.').join(filename.rsplit('.')[:-1])
-
+    print " "
     reader = Lers_Reader(filename)
     # print "File opened"
-    dataset = reader.read()
+    # dataset = reader.read()
+    # dataset.display()
+    dataset = reader.read_improved()
+    dataset.display()
     # print "Dataset read"
     # print "Beginning Discretization Process"
     dataset.discretize()
