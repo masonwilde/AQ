@@ -37,7 +37,7 @@ def run():
     # dataset = reader.read()
     # dataset.display()
     dataset = reader.read_improved()
-    dataset.display()
+    #dataset.display()
     # print "Dataset read"
     # print "Beginning Discretization Process"
     dataset.discretize()
