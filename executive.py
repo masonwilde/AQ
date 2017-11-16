@@ -31,7 +31,6 @@ def run():
     # End maxstar retrieval
     #get path without extension
     file_title = ('.').join(filename.rsplit('.')[:-1])
-    print " "
     reader = Lers_Reader(filename)
     # print "File opened"
     # dataset = reader.read()
