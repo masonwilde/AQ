@@ -1,10 +1,10 @@
 import unittest
 import ruleset
-from ruleset import Rule, Condition, Decision
+from ruleset import Rule, Condition, Decision, Ruleset
 from lers_reader import Lers_Reader
 
-reader = Lers_Reader("simple_consistent.d")
-mock_dataset = reader.read()
+reader = Lers_Reader("datasets/simple.txt")
+mock_dataset = reader.read_improved()
 
 class TestRuleset(unittest.TestCase):
     def test_get_available_attribute_values(self):
@@ -37,6 +37,86 @@ class TestRuleset(unittest.TestCase):
         for i in range(len(expected_ruleset)):
             for j in range(len(expected_ruleset[i].conditions)):
                 self.assertEqual(expected_ruleset[i].conditions[j], result[i].conditions[j])
+
+    def test_covered_cases_negated(self):
+        rule = Rule(conditions=[Condition(attribute="Temperature", value="normal")],
+                    decision=Decision(label="Flue", value="no"))
+        self.assertEqual(rule.cases_covered(mock_dataset), [0,1,3,4])
+
+    def test_covered_cases_unnegated(self):
+        rule = Rule(conditions=[Condition(attribute="Temperature", value="normal")],
+                    decision=Decision(label="Flue", value="no"))
+        self.assertEqual(rule.cases_covered(mock_dataset, negated=False), [2,5,6])
+
+    def test_rule_is_consistent_negated(self):
+        rule = Rule(conditions=[Condition(attribute="Temperature", value="normal")],
+                    decision=Decision(label="Flue", value="no"))
+        self.assertFalse(rule.is_consistent(mock_dataset))
+
+    def test_rule_is_consistent_unnegated(self):
+        rule = Rule(conditions=[Condition(attribute="Temperature", value="normal")],
+                    decision=Decision(label="Flue", value="no"))
+        self.assertTrue(rule.is_consistent(mock_dataset, negated=False))
+
+    def test_ruleset_is_consistent_negated_false(self):
+        rule1 = Rule(conditions=[Condition(attribute="Temperature", value="normal")],
+                    decision=Decision(label="Flue", value="yes"))
+        rule2 = Rule(conditions=[Condition(attribute="Temperature", value="high")],
+                    decision=Decision(label="Flue", value="no"))
+        rule3 = Rule(conditions=[Condition(attribute="Temperature", value="very_high")],
+                    decision=Decision(label="Flue", value="no"))
+        ruleset = Ruleset(rules=[rule1,rule2,rule3])
+        self.assertFalse(ruleset.is_consistent(mock_dataset))
+
+    def test_ruleset_is_complete_negated_true(self):
+        rule1 = Rule(conditions=[Condition(attribute="Temperature", value="normal"),
+                    Condition(attribute="Headache", value="no")],
+                    decision=Decision(label="Flue", value="yes"))
+        rule2 = Rule(conditions=[Condition(attribute="Temperature", value="high"),
+                    Condition(attribute="Temperature", value="very_high")],
+                    decision=Decision(label="Flue", value="no"))
+        rule3 = Rule(conditions=[Condition(attribute="Headache", value="yes")],
+                    decision=Decision(label="Flue", value="no"))
+        ruleset = Ruleset(rules=[rule1,rule2,rule3])
+        self.assertTrue(ruleset.is_complete(mock_dataset))
+
+    def test_ruleset_is_consistent_negated_true(self):
+        rule1 = Rule(conditions=[Condition(attribute="Temperature", value="normal"),
+                    Condition(attribute="Headache", value="no")],
+                    decision=Decision(label="Flue", value="yes"))
+        rule2 = Rule(conditions=[Condition(attribute="Temperature", value="high"),
+                    Condition(attribute="Temperature", value="very_high")],
+                    decision=Decision(label="Flue", value="no"))
+        rule3 = Rule(conditions=[Condition(attribute="Headache", value="yes")],
+                    decision=Decision(label="Flue", value="no"))
+        ruleset = Ruleset(rules=[rule1,rule2,rule3])
+        self.assertTrue(ruleset.is_consistent(mock_dataset))
+
+    def test_ruleset_is_complete_negated_false(self):
+        rule1 = Rule(conditions=[Condition(attribute="Temperature", value="normal"),
+                    Condition(attribute="Headache", value="no")],
+                    decision=Decision(label="Flue", value="yes"))
+        ruleset = Ruleset(rules=[rule1])
+        self.assertFalse(ruleset.is_complete(mock_dataset))
+
+    def test_ruleset_is_complete_unnegated_false(self):
+        rule1 = Rule(conditions=[Condition(attribute="Temperature", value="normal"),
+                    Condition(attribute="Headache", value="no")],
+                    decision=Decision(label="Flue", value="yes"))
+        ruleset = Ruleset(rules=[rule1])
+        self.assertFalse(ruleset.is_complete(mock_dataset, negated=False))
+
+    def test_ruleset_is_consistent_unnegated_false(self):
+        rule1 = Rule(conditions=[Condition(attribute="Temperature", value="normal"),
+                    Condition(attribute="Headache", value="no")],
+                    decision=Decision(label="Flue", value="yes"))
+        rule2 = Rule(conditions=[Condition(attribute="Temperature", value="high"),
+                    Condition(attribute="Temperature", value="very_high")],
+                    decision=Decision(label="Flue", value="no"))
+        rule3 = Rule(conditions=[Condition(attribute="Headache", value="yes")],
+                    decision=Decision(label="Flue", value="no"))
+        ruleset = Ruleset(rules=[rule1,rule2,rule3])
+        self.assertFalse(ruleset.is_consistent(mock_dataset, negated=False))
 
 if __name__ == '__main__':
     unittest.main()
