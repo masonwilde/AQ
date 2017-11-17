@@ -77,12 +77,17 @@ def make_star_for_concept(dataset, concept, maxstar):
     F = list(set(all_cases) - set(concept_cases))
     cases_to_cover = concept_cases
     while cases_to_cover:
-        #print "Cases to cover", cases_to_cover
+        # print "\tCases to cover", cases_to_cover
         star = [[]]
-        for bad_case in F:
-            #print "Making star for ", cases_to_cover[0], bad_case
-            partial_star = make_star(dataset.attributes, dataset.universe[cases_to_cover[0]], dataset.universe[bad_case])
+        bad_cases = F
+        # print "\tInitial Bad Cases", bad_cases
+        while bad_cases:
+            # print "\tMaking star for ", cases_to_cover[0], bad_cases[0]
+            partial_star = make_star(dataset.attributes, dataset.universe[cases_to_cover[0]], dataset.universe[bad_cases[0]])
             star = disjunction(star, partial_star, maxstar)
+            # print "\t\t", star
+            bad_cases = list(set(F).intersection(set(cases_covered_by_star(dataset, star))))
+            # print "\t\tbad cases still covered", bad_cases
         if len(star) > 1:
             trimmed_star = []
             for i in range(len(star)):
@@ -101,6 +106,7 @@ def make_star_for_concept(dataset, concept, maxstar):
         for star in stars:
             covered_cases = list(set(covered_cases).union(set(cases_covered_by_star(dataset, star))))
         cases_to_cover = list(set(concept_cases) - set(covered_cases))
+        # print "Cases now covered", covered_cases
     #print stars
     return stars
 
@@ -109,7 +115,7 @@ def induce(dataset, maxstar, file_title):
     ruleset = Ruleset()
     unnegated_ruleset = Ruleset()
     for concept in get_concepts(dataset):
-        #print "Working on concept ", concept
+        # print "Working on concept ", concept
         concept_stars.append([concept[0], make_star_for_concept(dataset, concept, maxstar)])
     for concept in concept_stars:
         decision = concept[0]
