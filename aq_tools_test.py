@@ -2,7 +2,7 @@ import unittest
 import aq_tools
 from lers_reader import Lers_Reader
 
-reader = Lers_Reader("simple_consistent.d")
+reader = Lers_Reader("datasets/simple.txt")
 mock_dataset = reader.read()
 
 

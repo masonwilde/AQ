@@ -3,7 +3,7 @@ import rule_tools
 from lers_reader import Lers_Reader
 from ruleset import Rule, Condition, Decision
 
-reader = Lers_Reader("simple_consistent.d")
+reader = Lers_Reader("datasets/simple.txt")
 mock_dataset = reader.read()
 
 class TestRuleTools(unittest.TestCase):
@@ -15,7 +15,7 @@ class TestRuleTools(unittest.TestCase):
         result = rule_tools.rule_from_complex([["Temperature", "high"], ["Headache", "no"]], ["Flue", "no"]).to_string()
         self.assertEqual(result, "(Temperature, not high) & (Headache, not no) -> (Flue, no)")
 
-    
+
 
 
 if __name__ == '__main__':

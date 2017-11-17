@@ -121,6 +121,10 @@ def induce(dataset, maxstar, file_title):
     # print "Rules with Negation"
     # self._ruleset.display()
     ruleset.print_to_file(filename=file_title+".with.negation.rul")
+    print "Negated ruleset is consistent:", ruleset.is_consistent(dataset)
+    print "Negated ruleset is complete:", ruleset.is_complete(dataset)
     # print "Rules without Negation"
     # self._unnegated_ruleset.display(negated=False)
     unnegated_ruleset.print_to_file(filename=file_title+".without.negation.rul", negated=False)
+    print "Unnegated ruleset is consistent:", unnegated_ruleset.is_consistent(dataset, negated=False)
+    print "Unnegated ruleset is complete:", unnegated_ruleset.is_complete(dataset, negated=False)

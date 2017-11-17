@@ -2,7 +2,7 @@ import unittest
 import dataset
 from lers_reader import Lers_Reader
 
-reader = Lers_Reader("numerical_consistent.d")
+reader = Lers_Reader("datasets/numerical.txt")
 mock_dataset = reader.read()
 
 

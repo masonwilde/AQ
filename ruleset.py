@@ -102,6 +102,30 @@ class Rule(object):
         rule += "-> (" + self.decision.label + ", " + self.decision.value + ")"
         return rule
 
+    def covers(self, case, negated=True):
+        for condition in self.conditions:
+            if negated:
+                if case.attribute_values[condition.attribute] == condition.value:
+                    return False
+            else:
+                if case.attribute_values[condition.attribute] != condition.value:
+                    return False
+        return True
+
+    def cases_covered(self, dataset, negated=True):
+        covered = []
+        for i, case in enumerate(dataset.universe):
+            if(self.covers(case, negated)):
+                covered.append(i)
+        return covered
+
+
+    def is_consistent(self, dataset, negated=True):
+        for case in self.cases_covered(dataset, negated):
+                if dataset.universe[case].decision != self.decision.value:
+                    return False
+        return True
+
 class Ruleset(object):
     def __init__(self, rules=[]):
         self._rules = rules
@@ -129,3 +153,15 @@ class Ruleset(object):
         for rule in self.rules:
             new_ruleset = new_ruleset + unnegate_rule(dataset, rule)
         return new_ruleset
+
+    def is_consistent(self, dataset, negated=True):
+        for rule in self.rules:
+            if not rule.is_consistent(dataset, negated):
+                return False
+        return True
+
+    def is_complete(self, dataset, negated=True):
+        covered = []
+        for rule in self.rules:
+            covered = list(set(covered).union(set(rule.cases_covered(dataset, negated))))
+        return covered == range(len(dataset.universe))
