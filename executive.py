@@ -1,7 +1,7 @@
 from lers_reader import Lers_Reader
 import aq_tools
 
-def run():
+def run(checks=False):
 
     # Get and open file from the user
     file_open = False
@@ -52,5 +52,5 @@ def run():
         print "No rules induced"
         return
     else:
-        aq_tools.induce(dataset, maxstar, file_title)
+        aq_tools.induce(dataset, maxstar, file_title, checks)
         print "Done."
