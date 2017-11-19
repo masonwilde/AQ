@@ -28,6 +28,9 @@ def get_cutpoints(vals):
     cutpoints = []
     for i in range(len(vals)-1):
         cutpoint = (vals[i]+vals[i+1])/2.0
+        int_cutpoint = int(cutpoint)
+        if int_cutpoint == cutpoint:
+            cutpoint = int_cutpoint
         cutpoints.append(cutpoint)
     return cutpoints
 
