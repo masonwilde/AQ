@@ -1,3 +1,12 @@
+# Name: Mason Wilde
+# KUID: 2645990
+# Course: EECS 690
+# Professor: Dr Jerzy Gryzmala-Busse
+# Semester: Fall 2017
+# Project: AQ Rule Inducer
+# File: lers_reader.py
+# Date Modified: 2017-11-19
+
 import sys
 import re
 from dataset import Dataset, Case

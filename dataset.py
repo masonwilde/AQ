@@ -1,3 +1,12 @@
+# Name: Mason Wilde
+# KUID: 2645990
+# Course: EECS 690
+# Professor: Dr Jerzy Gryzmala-Busse
+# Semester: Fall 2017
+# Project: AQ Rule Inducer
+# File: dataset.py
+# Date Modified:  2017-11-19
+
 import sys
 
 def attribute_is_discretizable(attribute, dataset):

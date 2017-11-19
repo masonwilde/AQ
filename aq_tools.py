@@ -1,3 +1,12 @@
+# Name: Mason Wilde
+# KUID: 2645990
+# Course: EECS 690
+# Professor: Dr Jerzy Gryzmala-Busse
+# Semester: Fall 2017
+# Project: AQ Rule Inducer
+# File: aq_tools.py
+# Date Modified:  2017-11-19
+
 from ruleset import Ruleset
 import rule_tools
 

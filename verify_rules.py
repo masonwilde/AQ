@@ -1,5 +1,14 @@
 #!/usr/bin/env python
 
+# Name: Mason Wilde
+# KUID: 2645990
+# Course: EECS 690
+# Professor: Dr Jerzy Gryzmala-Busse
+# Semester: Fall 2017
+# Project: AQ Rule Inducer
+# File: verify_rules.py
+# Date Modified: 2017-11-19
+
 import sys
 import ruleset
 from lers_reader import Lers_Reader

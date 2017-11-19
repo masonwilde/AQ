@@ -1,5 +1,13 @@
-from ruleset import Rule, Condition, Decision
+# Name: Mason Wilde
+# KUID: 2645990
+# Course: EECS 690
+# Professor: Dr Jerzy Gryzmala-Busse
+# Semester: Fall 2017
+# Project: AQ Rule Inducer
+# File: rule_tools.py
+# Date Modified: 2017-11-19
 
+from ruleset import Rule, Condition, Decision
 
 def rule_from_complex(complex1, n_decision):
     new_conditions = []

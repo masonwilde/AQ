@@ -1,3 +1,12 @@
+# Name: Mason Wilde
+# KUID: 2645990
+# Course: EECS 690
+# Professor: Dr Jerzy Gryzmala-Busse
+# Semester: Fall 2017
+# Project: AQ Rule Inducer
+# File: ruleset.py
+# Date Modified: 2017-11-19
+
 def get_available_attribute_values(dataset, rule):
     attribute_values = {}
     for condition in rule.conditions:
