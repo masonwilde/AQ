@@ -6,6 +6,7 @@
 # Project: AQ Rule Inducer
 # File: aq_tools_test.py
 # Date Modified:  2017-11-19
+"""Test suite for aq_tools"""
 
 import unittest
 import aq_tools

@@ -6,7 +6,7 @@
 # Project: AQ Rule Inducer
 # File: AQ.py
 # Date Modified:  2017-11-19
-
+"""Top level file for running AQ on a dataset"""
 #!/usr/bin/env python
 
 import sys

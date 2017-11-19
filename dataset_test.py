@@ -6,6 +6,7 @@
 # Project: AQ Rule Inducer
 # File: dataset_test.py
 # Date Modified:  2017-11-19
+"""Test suite for dataset"""
 
 import unittest
 import dataset

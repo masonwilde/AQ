@@ -6,7 +6,7 @@
 # Project: AQ Rule Inducer
 # File: aq_tools.py
 # Date Modified:  2017-11-19
-
+"""Suite of tools used in the AQ method of rule induction"""
 from ruleset import Ruleset
 import rule_tools
 
@@ -88,19 +88,20 @@ def complex_is_superset(complex1, complex2):
     return False
 
 def make_star_for_concept(dataset, concept, maxstar):
-    #print concept
+    """Returns a list of completed stars for a given concept"""
     stars = []
     concept_cases = concept[1]
     all_cases = range(len(dataset.universe))
     F = list(set(all_cases) - set(concept_cases))
     cases_to_cover = concept_cases
     while cases_to_cover:
-        #print "Cases to cover", cases_to_cover
         star = [[]]
+        # This loop can be optimized by only looking at non-concept cases_covered
+        # that are still covered, but this becomse inefficient after maxstar of about 70
         for bad_case in F:
-            #print "Making star for ", cases_to_cover[0], bad_case
             partial_star = make_star(dataset.attributes, dataset.universe[cases_to_cover[0]], dataset.universe[bad_case])
             star = disjunction(star, partial_star, maxstar)
+        # remove superset complexes
         if len(star) > 1:
             trimmed_star = []
             for i in range(len(star)):
@@ -113,16 +114,17 @@ def make_star_for_concept(dataset, concept, maxstar):
                     trimmed_star.append(star[i])
                     #print "adding ", star[i]
             star = trimmed_star
+        # Keep only the star that covers the most cases
         star = [max(star, key=lambda c: len(cases_covered_by_complex(dataset, c)))]
         stars.append(star)
         covered_cases = []
         for star in stars:
             covered_cases = list(set(covered_cases).union(set(cases_covered_by_star(dataset, star))))
         cases_to_cover = list(set(concept_cases) - set(covered_cases))
-    #print stars
     return stars
 
 def induce(dataset, maxstar, file_title, checks=False):
+    """Induce rules with and withour negation for a LERS format ruleset"""
     concept_stars = []
     ruleset = Ruleset()
     unnegated_ruleset = Ruleset()
