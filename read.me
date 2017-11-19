@@ -31,7 +31,9 @@ To verify rules
 
 This process is capable of reading a dataset in LERS format, along with rules
 of the form "(attribute1, not value1) & (attribute2, not value2) -> (decision, value)",
-and then confirming that the ruleset is complete and consistent
+and then confirming that the ruleset is complete and consistent.
+
+It is fairly fragile and will crash if the ruleset uses a different discretization method or does not match the dataset
 
 Method 1:
   In a Unix Shel terminal
