@@ -33,6 +33,7 @@ def main():
         the_rules = ruleset.read_rules(ruleset_filename)
         reader = Lers_Reader(dataset_filename)
         the_data = reader.read_improved()
+        the_data.discretize()
         print "Ruleset is consistent:", the_rules.is_consistent(the_data, not without)
         print "Ruleset is complete:", the_rules.is_complete(the_data, not without)
     else:
