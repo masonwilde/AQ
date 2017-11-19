@@ -157,6 +157,9 @@ class Rule(object):
     def is_consistent(self, dataset, negated=True):
         for case in self.cases_covered(dataset, negated):
                 if dataset.universe[case].decision != self.decision.value:
+                    print "Rule is inconsistent"
+                    print "Rule:", self.to_string(negated)
+                    print "Case: #", case 
                     return False
         return True
 
