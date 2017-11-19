@@ -158,8 +158,8 @@ class Rule(object):
         for case in self.cases_covered(dataset, negated):
                 if dataset.universe[case].decision != self.decision.value:
                     print "Rule is inconsistent"
-                    print "Rule:", self.to_string(negated)
-                    print "Case: #", case 
+                    print "\tRule:", self.to_string(negated)
+                    print "\tCase: #", case 
                     return False
         return True
 
