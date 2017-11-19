@@ -11,6 +11,7 @@ from ruleset import Ruleset
 import rule_tools
 
 def combine_complex(complex1, complex2):
+    """Combines two complexes into one result containing the selectors from each input"""
     new_complex = []
     for selector1 in complex1:
         new_complex.append(selector1)
@@ -20,6 +21,7 @@ def combine_complex(complex1, complex2):
     return new_complex
 
 def disjunction(star1, star2, maxstar):
+    """Returns the disjunction of two stars, not allowing it to exceed a size of maxstar"""
     new_star = []
     for complex1 in star1:
         for complex2 in star2:
@@ -29,6 +31,7 @@ def disjunction(star1, star2, maxstar):
     return new_star
 
 def cases_covered_by_complex(dataset, complex1):
+    """Returns a list of case numbers covered by a complex"""
     cases = []
     for i, case in enumerate(dataset.universe):
         if case_covered_by_complex(case, complex1):
@@ -36,18 +39,21 @@ def cases_covered_by_complex(dataset, complex1):
     return cases
 
 def case_covered_by_complex(case, complex1):
+    """Returns true if a case is covered by the complex, false otherwise"""
     for selector in complex1:
         if case.attribute_values[selector[0]] == selector[1]:
             return False
     return True
 
 def cases_covered_by_star(dataset, star):
+    """Returns a list of case numbers covered by a star"""
     cases = []
     for complex1 in star:
         cases = list(set(cases) | set(cases_covered_by_complex(dataset, complex1)))
     return cases
 
 def make_star(attributes, case1, case2):
+    """Return a partial star for the difference between two cases"""
     star = []
     for attribute in attributes:
         if case1.attribute_values[attribute] != case2.attribute_values[attribute]:
@@ -55,6 +61,7 @@ def make_star(attributes, case1, case2):
     return star
 
 def get_cases_in_concept(dataset, decision_value):
+    """Returns a list of case numbers in a given concept"""
     cases =[]
     for i, case in enumerate(dataset.universe):
         if case.decision == decision_value:
@@ -62,6 +69,7 @@ def get_cases_in_concept(dataset, decision_value):
     return cases
 
 def get_concepts(dataset):
+    """Returns a list of concepts (list of case numbers) in a dataset"""
     concepts = []
     for cur_decision in dataset.decision_range:
         cases = get_cases_in_concept(dataset, cur_decision)
@@ -70,6 +78,7 @@ def get_concepts(dataset):
     return concepts
 
 def complex_is_superset(complex1, complex2):
+    """Returns true if a complex is a superset of another"""
     for selector in complex2:
         if selector not in complex1:
             return False
