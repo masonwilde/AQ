@@ -27,7 +27,7 @@ def get_sorted_numerical_attribute_values(attribute, dataset):
 def get_cutpoints(vals):
     cutpoints = []
     for i in range(len(vals)-1):
-        cutpoint = (vals[i]+vals[i+1])/2
+        cutpoint = (vals[i]+vals[i+1])/2.0
         cutpoints.append(cutpoint)
     return cutpoints
 
