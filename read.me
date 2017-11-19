@@ -26,3 +26,17 @@ NOTES:
   Due to the python implementation, execution for large datasets can be quite long.
   For reference, inducing rules for the german.txt dataset with a maxstar value of
   1 takes approx. 6m30s on the cycle1 server
+
+To verify rules
+
+This process is capable of reading a dataset in LERS format, along with rules
+of the form "(attribute1, not value1) & (attribute2, not value2) -> (decision, value)",
+and then confirming that the ruleset is complete and consistent
+
+Method 1:
+  In a Unix Shel terminal
+    Enter `make verify data="path/to/dataset.txt" rules="path/to/rules.rul" negation="with|without"`
+
+Method 2:
+  In a Unix Shel terminal
+    Enter `python verify_rules.py "path/to/dataset.txt" "path/to/rules.rul" [with|without]`

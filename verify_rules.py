@@ -8,7 +8,7 @@
 # Project: AQ Rule Inducer
 # File: verify_rules.py
 # Date Modified: 2017-11-19
-
+"""Tool to verify a ruleset for a dataset"""
 import sys
 import ruleset
 from lers_reader import Lers_Reader

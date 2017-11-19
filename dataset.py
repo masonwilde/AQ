@@ -142,6 +142,7 @@ class Dataset(object):
         return True
 
     def discretize(self):
+        """Converts numerical attributes into a series of symbolic attribute"""
         new_attributes = []
         for attribute in self.attributes:
             if attribute_is_discretizable(attribute, self):

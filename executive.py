@@ -11,7 +11,7 @@ from lers_reader import Lers_Reader
 import aq_tools
 
 def run(checks=False):
-
+    """Runs the AQ algorithm on a read dataset"""
     # Get and open file from the user
     file_open = False
     while not file_open:
@@ -41,17 +41,8 @@ def run(checks=False):
     #get path without extension
     file_title = ('.').join(filename.rsplit('.')[:-1])
     reader = Lers_Reader(filename)
-    # print "File opened"
-    # dataset = reader.read()
-    # dataset.display()
     dataset = reader.read_improved()
-    #dataset.display()
-    # print "Dataset read"
-    # print "Beginning Discretization Process"
     dataset.discretize()
-    # print "Discretization Complete"
-    #dataset.display()
-    #dataset.discretize()
     if not dataset.is_consistent():
         with open("my-data.with.negation.rul", 'w') as f:
             f.write("! The input data set is inconsistent\n")

@@ -10,6 +10,7 @@
 from ruleset import Rule, Condition, Decision
 
 def rule_from_complex(complex1, n_decision):
+    """Returns a rule made from a complex"""
     new_conditions = []
     for selector in complex1:
         new_conditions.append(Condition(attribute =selector[0], value=selector[1]))

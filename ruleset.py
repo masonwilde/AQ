@@ -6,10 +6,12 @@
 # Project: AQ Rule Inducer
 # File: ruleset.py
 # Date Modified: 2017-11-19
+"""Structure and methods for rules, conditions, decisions, and rulesets"""
 
 import sys
 
 def get_available_attribute_values(dataset, rule):
+    """Returns a dictionary of attributes and their available values given rule with negation"""
     attribute_values = {}
     for condition in rule.conditions:
         if condition.attribute not in attribute_values:
@@ -18,6 +20,7 @@ def get_available_attribute_values(dataset, rule):
     return attribute_values
 
 def expand_ruleset(ruleset, attr, values):
+    """Expands a ruleset to include the given attribute and values"""
     new_ruleset = []
     for rule in ruleset:
         # print "Starting with Rule:", rule.to_string()
@@ -32,6 +35,7 @@ def expand_ruleset(ruleset, attr, values):
     return new_ruleset
 
 def unnegate_rule(dataset, rule):
+    """Returns a new ruleset without negation built from a rule with negation"""
     available_attribute_values = get_available_attribute_values(dataset, rule)
     new_ruleset = [Rule(decision=rule.decision)]
     for attribute in available_attribute_values:
@@ -39,6 +43,7 @@ def unnegate_rule(dataset, rule):
     return new_ruleset
 
 def read_rules(filename):
+    """Returns a ruleset read fror a .rul file"""
     ruleset = Ruleset()
     rule_file = open(filename, 'r')
     blank_rule = Rule()
@@ -130,6 +135,7 @@ class Rule(object):
         self._decision = value
 
     def to_string(self, negated=True):
+        """Returns a string of the given rule"""
         rule = ""
         for i, condition in enumerate(self.conditions):
             if i > 0:
@@ -139,6 +145,7 @@ class Rule(object):
         return rule
 
     def covers(self, case, negated=True):
+        """Returns true if the given case is covered by the rule"""
         for condition in self.conditions:
             if negated:
                 if case.attribute_values[condition.attribute] == condition.value:
@@ -149,6 +156,7 @@ class Rule(object):
         return True
 
     def cases_covered(self, dataset, negated=True):
+        """Returns a list of case numbers covered by the rule in a given dataset"""
         covered = []
         for i, case in enumerate(dataset.universe):
             if(self.covers(case, negated)):
@@ -157,6 +165,7 @@ class Rule(object):
 
 
     def is_consistent(self, dataset, negated=True):
+        """Returns true if the rule is consistent for a given dataset"""
         for case in self.cases_covered(dataset, negated):
                 if dataset.universe[case].decision != self.decision.value:
                     print "Rule is inconsistent"
@@ -191,24 +200,28 @@ class Ruleset(object):
             print rule.to_string(negated)
 
     def print_to_file(self, filename, negated=True):
+        """Prints ruleset to a file"""
         f = open(filename, 'w')
         for rule in self.rules:
             f.write(rule.to_string(negated) + '\n')
         f.closed
 
     def unnegate(self, dataset):
+        """Creates a new ruleset of rules without negation"""
         new_ruleset = []
         for rule in self.rules:
             new_ruleset = new_ruleset + unnegate_rule(dataset, rule)
         return new_ruleset
 
     def is_consistent(self, dataset, negated=True):
+        """returns true if the ruleset is consistent for the given dataset"""
         for rule in self.rules:
             if not rule.is_consistent(dataset, negated):
                 return False
         return True
 
     def is_complete(self, dataset, negated=True):
+        """returns true if the ruleset is complete for the given dataset"""
         covered = []
         for rule in self.rules:
             covered = list(set(covered).union(set(rule.cases_covered(dataset, negated))))

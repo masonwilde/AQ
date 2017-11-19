@@ -6,6 +6,7 @@
 # Project: AQ Rule Inducer
 # File: ruleset_test.py
 # Date Modified: 2017-11-19
+"""A testing suite for ruleset"""
 
 import unittest
 import ruleset

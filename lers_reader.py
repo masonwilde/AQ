@@ -17,6 +17,7 @@ class Lers_Reader(object):
         self._filename = filename
 
     def read(self):
+        """Reads a dataset assuming proper lines"""
         self._file = open(self._filename, 'r')
         dataset = Dataset()
         for row_of_data in self._file:
@@ -48,6 +49,7 @@ class Lers_Reader(object):
         return dataset
 
     def read_improved(self):
+        """Reads a dataset regardless of nice lines"""
         self._file = open(self._filename, 'r')
         inpt = re.findall('\S+|\n', self._file.read())
         #rint inpt
