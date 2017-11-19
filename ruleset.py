@@ -7,6 +7,8 @@
 # File: ruleset.py
 # Date Modified: 2017-11-19
 
+import sys
+
 def get_available_attribute_values(dataset, rule):
     attribute_values = {}
     for condition in rule.conditions:
@@ -159,7 +161,16 @@ class Rule(object):
                 if dataset.universe[case].decision != self.decision.value:
                     print "Rule is inconsistent"
                     print "\tRule:", self.to_string(negated)
-                    print "\tCase: #", case 
+                    print "\tCase: #", case
+                    sys.stdout.write('\t')
+                    for attribute in dataset.attributes:
+                        sys.stdout.write(attribute + '\t')
+                    sys.stdout.write(dataset.decision + '\n')
+                    case = dataset.universe[case]
+                    sys.stdout.write('\t')
+                    for attribute in dataset.attributes:
+                        sys.stdout.write(case.attribute_values[attribute] + '\t')
+                    sys.stdout.write(case.decision + '\n')
                     return False
         return True
 
