@@ -27,6 +27,31 @@ def unnegate_rule(dataset, rule):
         new_ruleset = expand_ruleset(new_ruleset, attribute, available_attribute_values[attribute])
     return new_ruleset
 
+def read_rules(filename):
+    ruleset = Ruleset()
+    rule_file = open(filename, 'r')
+    blank_rule = Rule()
+    for line in rule_file:
+        new_rule = blank_rule
+        conditions, arrow, decision = line.partition("->")
+        decision = decision.replace("(", "").replace(")", "").strip()
+        decision = decision.split(",")
+        decision[0] = decision[0].strip()
+        decision[1] = decision[1].strip()
+        conditions = conditions.replace("(", "").replace(")", "").strip()
+        conditions = conditions.split("&")
+        conditions_list = []
+        for condition in conditions:
+            condition = condition.split(",")
+            condition[1] = condition[1].replace("not", "").strip()
+            condition = Condition(attribute=condition[0].strip(), value=condition[1].strip())
+            conditions_list.append(condition)
+        # print "new rule is", new_rule.to_string()
+        ruleset.rules.append(Rule(conditions=conditions_list, decision=Decision(label=decision[0], value=decision[1])))
+    # ruleset.display()
+    return ruleset
+
+
 class Condition(object):
     def __init__(self, attribute = None, value = None):
         self._attribute = attribute
