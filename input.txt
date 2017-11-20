@@ -1,3 +1,2 @@
-datasets/simple.txt
-1
-
+datasets/german.txt
+100
